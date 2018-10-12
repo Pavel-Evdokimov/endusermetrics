@@ -45,4 +45,14 @@ describe("#api test", () => {
       });
   });
 
+  it("metrics/errors", done => {
+    request(app)
+    .post("/metrics/errors")
+    .send(JSON.stringify({ test: "error"}))
+    .expect(200)
+    .end((err, res) => {
+      done(err);
+    });
+  });
+  
 });
