@@ -2,10 +2,6 @@ const request = require("supertest");
 const expect = require("chai").expect();
 const app = require("../app");
 
-function hasCorrectResponse(res) {
-  return res.body.result === "inasdf ok"
-}
-
 describe("#api test", () => {
   it("/", done => {
     request(app)
@@ -13,7 +9,7 @@ describe("#api test", () => {
       .expect(200)
       .end((err, res) => {
         done(err);
-      })
+      });
   });
 
   it("/404", done => {
@@ -22,7 +18,7 @@ describe("#api test", () => {
       .expect(404)
       .end((err, res) => {
         done(err);
-      })
+      });
   });
 
   it("/metrics", done => {
@@ -45,14 +41,13 @@ describe("#api test", () => {
       });
   });
 
-  it("metrics/errors", done => {
+  it("/metrics/errors", done => {
     request(app)
-    .post("/metrics/errors")
-    .send(JSON.stringify({ test: "error"}))
-    .expect(200)
-    .end((err, res) => {
-      done(err);
-    });
+      .post("/metrics/errors")
+      .send(JSON.stringify({ test: "error" }))
+      .expect(200)
+      .end((err, res) => {
+        done(err);
+      });
   });
-  
 });
