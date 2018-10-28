@@ -1,7 +1,10 @@
-(function(win) {
-    //TODO: метод sendBeacon не поддерживается в IE
-  var OTvar = { currentUser: {}, node: {} }
-  win.onerror = function(message, source, lineon, colno, error) {
+(function (win) {
+  //TODO: метод sendBeacon не поддерживается в IE
+  var OTvar = {
+    currentUser: {},
+    node: {}
+  }
+  win.onerror = function (message, source, lineon, colno, error) {
     let errorMessag = {
       dateTimeStamp: new Date().toISOString(),
       error: {
