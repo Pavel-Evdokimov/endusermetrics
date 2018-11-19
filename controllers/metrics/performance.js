@@ -12,7 +12,7 @@ router.post("/", (req, res) => {
             res.status(500).send({error: err.message});
             return;
         }
-        res.json({ result: documentInsertResponse.ok });
+        res.send(documentInsertResponse.ok);
     });
 });
 
