@@ -1,3 +1,4 @@
+require('dotenv').config({ path: 'dev.env' });
 const request = require("supertest");
 const expect = require("chai").expect();
 const app = require("../app");

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const nano = require("nano")("http://localhost:5984");
-const csui_performance_db = nano.db.use("csui_performance");
+const nano = require("nano")(process.env.DB_LINK);
+const csui_performance_db = nano.db.use(process.env.DB_NAME);
 
 router.post("/", (req, res) => {
     let post = JSON.parse(req.body);
