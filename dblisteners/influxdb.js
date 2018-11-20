@@ -38,11 +38,15 @@ function getInfluxPoint(tags, fields) {
         fields
     };
 }
+// TODO: убрать костыль. Сделано для обратной совместимости с IFrame
+function getRequestBody(requestBody) {
+    return requestBody || [];
+}
 
 function getNavigationTimingInfluxPoints(requestBody, restApiId) {
     return requestBody
         ? [
-              ...requestBody["NavigationTiming"].map(value => {
+              ...getRequestBody(requestBody["NavigationTiming"]).map(value => {
                   return getInfluxPoint(
                       {},
                       getFields(
@@ -54,7 +58,7 @@ function getNavigationTimingInfluxPoints(requestBody, restApiId) {
                       )
                   );
               }),
-              ...requestBody["ResourceTimingXHR"].map(value => {
+              ...getRequestBody(requestBody["ResourceTimingXHR"]).map(value => {
                   return getInfluxPoint(
                       {},
                       getFields(
@@ -66,7 +70,7 @@ function getNavigationTimingInfluxPoints(requestBody, restApiId) {
                       )
                   );
               }),
-              ...requestBody["IFrame"].map(value => {
+              ...getRequestBody(requestBody["IFrame"]).map(value => {
                   return getInfluxPoint(
                       {},
                       getFields(
