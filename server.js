@@ -1,3 +1,5 @@
 const app = require("./app");
-const config = require("./config/config");
-app.listen(config.app.port);
+app.listen(process.env.APP_PORT, process.env.APP_HOST, function() {
+    console.log(process.env.APP_PORT);
+    console.log(process.env.APP_HOST);
+});

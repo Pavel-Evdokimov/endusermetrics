@@ -1,9 +1,7 @@
 const Influx = require("influx");
-const influx = new Influx.InfluxDB(
-    "http://z14-0632-otmon:8086/csui_performance"
-);
-const nano = require("nano")("http://localhost:5984");
-const csui_performance = nano.db.use("csui_performance");
+const influx = new Influx.InfluxDB(process.env.INFLUX_DB_LINK);
+const nano = require("nano")(process.env.DB_LINK);
+const csui_performance = nano.db.use(process.env.DB_NAME);
 const feed = csui_performance.follow({ since: "now", include_docs: true });
 const querystring = require("querystring");
 const url = require("url");
@@ -40,11 +38,15 @@ function getInfluxPoint(tags, fields) {
         fields
     };
 }
+// TODO: убрать костыль. Сделано для обратной совместимости с IFrame
+function getRequestBody(requestBody) {
+    return requestBody || [];
+}
 
 function getNavigationTimingInfluxPoints(requestBody, restApiId) {
     return requestBody
         ? [
-              ...requestBody["NavigationTiming"].map(value => {
+              ...getRequestBody(requestBody["NavigationTiming"]).map(value => {
                   return getInfluxPoint(
                       {},
                       getFields(
@@ -56,7 +58,7 @@ function getNavigationTimingInfluxPoints(requestBody, restApiId) {
                       )
                   );
               }),
-              ...requestBody["ResourceTimingXHR"].map(value => {
+              ...getRequestBody(requestBody["ResourceTimingXHR"]).map(value => {
                   return getInfluxPoint(
                       {},
                       getFields(
@@ -68,7 +70,7 @@ function getNavigationTimingInfluxPoints(requestBody, restApiId) {
                       )
                   );
               }),
-              ...requestBody["IFrame"].map(value => {
+              ...getRequestBody(requestBody["IFrame"]).map(value => {
                   return getInfluxPoint(
                       {},
                       getFields(
@@ -111,7 +113,7 @@ feed.on("change", change => {
     ).map(value => {
         return new Promise((res, rej) => {
             influx
-                .writeMeasurement("navigationTimings", [value])
+                .writeMeasurement(process.env.INFLUX_NAVIGATION_TIMINGS_SERIES_NAME, [value])
                 .then(() => {
                     res("ok");
                 })
@@ -124,7 +126,7 @@ feed.on("change", change => {
         getMeasureTimingInfluxPoints(change.doc, `${change.id}`).map(value => {
             return new Promise((res, rej) => {
                 influx
-                    .writeMeasurement("measureTimings", [value])
+                    .writeMeasurement(process.env.INFLUX_MEASURE_TIMINGS_SERIES_NAME, [value])
                     .then(() => {
                         res();
                     })
@@ -135,12 +137,12 @@ feed.on("change", change => {
         })
     );
     Promise.all(promises)
-    .then((value) => {
-        console.log(value);
-    })
-    .catch(err => {
-        console.error(err);
-    });
+        .then(value => {
+            console.log(value);
+        })
+        .catch(err => {
+            console.error(err);
+        });
 });
 
 feed.follow();
