@@ -1,0 +1,18 @@
+{
+    "apps": [
+        {
+            "name": "",
+            "script": "",
+            "watch": true,
+            "env": {
+                "APP_PORT": 3000,
+                "APP_HOST": "localhost",
+                "DB_LINK": "http://localhost:5984",
+                "DB_NAME": "",
+                "INFLUX_DB_LINK": "",
+                "INFLUX_NAVIGATION_TIMINGS_SERIES_NAME": "",
+                "INFLUX_MEASURE_TIMINGS_SERIES_NAME": ""
+            }
+        }
+    ]
+}
