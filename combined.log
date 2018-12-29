@@ -1,0 +1,7 @@
+{"message":{"key":"value"},"level":"info"}
+{"message":{"key":"value"},"level":"info"}
+undefined
+{"message":{"key":"value"},"level":"info"}
+{"level":"info","durationMs":1000,"message":"test"}
+{"message":{"key":"value"},"level":"info"}
+{"level":"info","durationMs":1000,"message":"test"}

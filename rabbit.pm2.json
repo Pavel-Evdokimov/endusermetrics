@@ -1,0 +1,13 @@
+{
+    "apps": [
+        {
+            "name": "csui-influx-client",
+            "script": "./dblisteners/rabbit.js",
+            "watch": true,
+            "env": {
+                "DB_LINK": "http://localhost:5984",
+                "DB_NAME": "csui_performance_prod"
+            }
+        }
+    ]
+}

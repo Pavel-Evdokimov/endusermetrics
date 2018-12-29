@@ -1,0 +1,15 @@
+{
+    "apps": [
+        {
+            "name": "csui-monitor2",
+            "script": "./server.js",
+            "watch": true,
+            "env": {
+                "APP_PORT": 3000,
+                "APP_HOST": "z01-14090.dyn.vesta.ru",
+                "DB_LINK": "http://localhost:5984",
+                "DB_NAME": "csui_performance_prod"
+            }
+        }
+    ]
+}

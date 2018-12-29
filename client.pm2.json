@@ -1,0 +1,16 @@
+{
+    "apps": [
+        {
+            "name": "csui-influx-client",
+            "script": "./dblisteners/influxdb.js",
+            "watch": true,
+            "env": {
+                "DB_LINK": "http://localhost:5984",
+                "DB_NAME": "csui_performance_prod",
+                "INFLUX_DB_LINK": "http://z14-0632-otmon:8086/csui_performance",
+                "INFLUX_NAVIGATION_TIMINGS_SERIES_NAME": "navigationTimings_prod",
+                "INFLUX_MEASURE_TIMINGS_SERIES_NAME": "measureTimings_prod"
+            }
+        }
+    ]
+}
